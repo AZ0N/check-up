@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,10 +12,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Check Up',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: const Scaffold(),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Check Up'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                //TODO Add new person
+              },
+              icon: Icon(Icons.add),
+              splashRadius: 20,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
