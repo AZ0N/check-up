@@ -1,0 +1,65 @@
+import 'package:check_up/person.dart';
+import 'package:flutter/material.dart';
+
+class CreateNewPerson extends StatefulWidget {
+  const CreateNewPerson({super.key});
+
+  @override
+  State<CreateNewPerson> createState() => _CreateNewPersonState();
+}
+
+class _CreateNewPersonState extends State<CreateNewPerson> {
+  final formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Add New Person')),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Form(
+            key: formKey,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextFormField(
+                    controller: nameController,
+                    decoration: const InputDecoration(hintText: 'Name'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter a name!';
+                      }
+                      if (value.length > 24) {
+                        return 'Name is too long!';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      if (!formKey.currentState!.validate()) {
+                        return;
+                      }
+                      Person newPerson = Person(
+                        name: nameController.text,
+                        lastCheckIn: DateTime.now(),
+                      );
+                      Navigator.pop(context, newPerson);
+                    },
+                    label: const Text('Add Person'),
+                    icon: const Icon(Icons.add),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

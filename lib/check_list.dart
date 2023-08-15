@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:check_up/create_new_person.dart';
 import 'package:check_up/person.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,9 +15,6 @@ class CheckList extends StatefulWidget {
 class _CheckListState extends State<CheckList> {
   List<Person> people = [];
   late Future peopleFuture = loadPeople();
-
-  final formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,55 +42,7 @@ class _CheckListState extends State<CheckList> {
               var newPerson = await Navigator.push(
                 context,
                 MaterialPageRoute<Person>(
-                  //TODO Move this page into new file
-                  builder: (context) => Scaffold(
-                    appBar: AppBar(title: const Text('Add New Person')),
-                    body: SafeArea(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Form(
-                          key: formKey,
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                TextFormField(
-                                  controller: nameController,
-                                  decoration:
-                                      const InputDecoration(hintText: 'Name'),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Enter a name!';
-                                    }
-                                    if (value.length > 24) {
-                                      return 'Name is too long!';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                const SizedBox(height: 20),
-                                ElevatedButton.icon(
-                                  onPressed: () {
-                                    if (!formKey.currentState!.validate()) {
-                                      return;
-                                    }
-                                    Person newPerson = Person(
-                                      name: nameController.text,
-                                      lastCheckIn: DateTime.now(),
-                                    );
-                                    Navigator.pop(context, newPerson);
-                                  },
-                                  label: const Text('Add Person'),
-                                  icon: const Icon(Icons.add),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  builder: (context) => const CreateNewPerson(),
                 ),
               );
 
