@@ -87,8 +87,8 @@ class _CheckListState extends State<CheckList> {
   String formatDuration(Duration duration) {
     int years = duration.inDays ~/ 365;
     int weeks = (duration.inDays - years * 365) ~/ 7;
-    int days = duration.inDays - weeks * 7;
-    int hours = duration.inHours - (weeks * 7 + days) * 24;
+    int days = duration.inDays - (years * 365 + weeks * 7);
+    int hours = duration.inHours - (years * 365 + weeks * 7 + days) * 24;
 
     String result = "";
 
