@@ -24,6 +24,20 @@ class _CheckListState extends State<CheckList> {
         actions: [
           IconButton(
             onPressed: () {
+              setState(() {
+                people[0].lastCheckIn =
+                    DateTime.now().add(const Duration(days: -10));
+                people[1].lastCheckIn =
+                    DateTime.now().add(const Duration(days: -365 - 7 - 2));
+                people[2].lastCheckIn =
+                    DateTime.now().add(const Duration(days: -2, hours: -5));
+              });
+            },
+            icon: const Icon(Icons.manage_accounts_outlined),
+            splashRadius: 20,
+          ),
+          IconButton(
+            onPressed: () {
               //TODO Add new person
             },
             icon: const Icon(Icons.add),
