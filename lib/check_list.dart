@@ -73,17 +73,26 @@ class _CheckListState extends State<CheckList> {
             itemBuilder: (context, index) {
               Person person = people[index];
               Duration dif = DateTime.now().difference(person.lastCheckIn);
-              return ListTile(
-                title: Text(people[index].name),
-                subtitle: Text(Util.formatDuration(dif)),
-                trailing: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      people[index].lastCheckIn = DateTime.now();
-                    });
-                    savePeople();
-                  },
-                  icon: const Icon(Icons.access_time),
+              return GestureDetector(
+                onLongPress: () {
+                  //TODO Create "Are you sure?"-menu
+                  setState(() {
+                    people.removeAt(index);
+                  });
+                  savePeople();
+                },
+                child: ListTile(
+                  title: Text(people[index].name),
+                  subtitle: Text(Util.formatDuration(dif)),
+                  trailing: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        people[index].lastCheckIn = DateTime.now();
+                      });
+                      savePeople();
+                    },
+                    icon: const Icon(Icons.access_time),
+                  ),
                 ),
               );
             },
