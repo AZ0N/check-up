@@ -14,7 +14,7 @@ class CheckList extends StatefulWidget {
 }
 
 class _CheckListState extends State<CheckList> {
-  List<Person> people = [];
+  List<Person> people = []; //TODO Sort people based on lastCheckIn
   late Future peopleFuture = loadPeople();
 
   @override
@@ -39,6 +39,7 @@ class _CheckListState extends State<CheckList> {
             splashRadius: 20,
           ),
           IconButton(
+            //TODO Extract method
             onPressed: () async {
               var newPerson = await Navigator.push(
                 context,
@@ -73,8 +74,10 @@ class _CheckListState extends State<CheckList> {
             itemBuilder: (context, index) {
               Person person = people[index];
               Duration dif = DateTime.now().difference(person.lastCheckIn);
+              //TODO Maybe extract this into StatelessWidget, passing in the person and a callback
               return GestureDetector(
                 onLongPress: () {
+                  //TODO Maybe create context menu, with options to delete the person and manually set lastCheckIn
                   //TODO Create "Are you sure?"-menu
                   setState(() {
                     people.removeAt(index);
@@ -102,6 +105,7 @@ class _CheckListState extends State<CheckList> {
     );
   }
 
+  //TODO Maybe move these methods to data.dart/localData.dart for clearer separation
   savePeople() async {
     var prefs = await SharedPreferences.getInstance();
     // Map each person to a JSON encoded map

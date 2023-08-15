@@ -1,6 +1,7 @@
 class Person {
   String name;
   DateTime lastCheckIn;
+  //TODO bool isFavorite
 
   Person({required this.name, required this.lastCheckIn});
 
