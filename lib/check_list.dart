@@ -17,35 +17,50 @@ class _CheckListState extends State<CheckList> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: peopleFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return ListView.builder(
-            itemCount: people.length,
-            itemBuilder: (context, index) {
-              Person person = people[index];
-              Duration dif = DateTime.now().difference(person.lastCheckIn);
-              return ListTile(
-                title: Text(people[index].name),
-                subtitle: Text(formatDuration(dif)),
-                trailing: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      people[index].lastCheckIn = DateTime.now();
-                    });
-                    savePeople();
-                  },
-                  icon: const Icon(Icons.access_time),
-                ),
-              );
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Check Up'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              //TODO Add new person
             },
-          );
-        });
+            icon: const Icon(Icons.add),
+            splashRadius: 20,
+          ),
+        ],
+      ),
+      body: FutureBuilder(
+          future: peopleFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return ListView.builder(
+              itemCount: people.length,
+              itemBuilder: (context, index) {
+                Person person = people[index];
+                Duration dif = DateTime.now().difference(person.lastCheckIn);
+                return ListTile(
+                  title: Text(people[index].name),
+                  subtitle: Text(formatDuration(dif)),
+                  trailing: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        people[index].lastCheckIn = DateTime.now();
+                      });
+                      savePeople();
+                    },
+                    icon: const Icon(Icons.access_time),
+                  ),
+                );
+              },
+            );
+          }),
+    );
   }
 
   savePeople() async {

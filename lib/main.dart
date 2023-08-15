@@ -15,25 +15,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Check Up',
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Check Up'),
-          centerTitle: true,
-          actions: [
-            IconButton(
-              onPressed: () {
-                //TODO Add new person
-              },
-              icon: Icon(Icons.add),
-              splashRadius: 20,
-            ),
-          ],
-        ),
-        body: CheckList(),
-      ),
-    );
+        title: 'Check Up',
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        home: CheckList());
   }
 }
