@@ -1,3 +1,2 @@
-# check-up
-
-A new Flutter project.
+# Check Up!
+An app to help keeping track of when you last checked in with friends, family, etc.
