@@ -32,34 +32,35 @@ class _CheckListState extends State<CheckList> {
         ],
       ),
       body: FutureBuilder(
-          future: peopleFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState != ConnectionState.done) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return ListView.builder(
-              itemCount: people.length,
-              itemBuilder: (context, index) {
-                Person person = people[index];
-                Duration dif = DateTime.now().difference(person.lastCheckIn);
-                return ListTile(
-                  title: Text(people[index].name),
-                  subtitle: Text(formatDuration(dif)),
-                  trailing: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        people[index].lastCheckIn = DateTime.now();
-                      });
-                      savePeople();
-                    },
-                    icon: const Icon(Icons.access_time),
-                  ),
-                );
-              },
+        future: peopleFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const Center(
+              child: CircularProgressIndicator(),
             );
-          }),
+          }
+          return ListView.builder(
+            itemCount: people.length,
+            itemBuilder: (context, index) {
+              Person person = people[index];
+              Duration dif = DateTime.now().difference(person.lastCheckIn);
+              return ListTile(
+                title: Text(people[index].name),
+                subtitle: Text(formatDuration(dif)),
+                trailing: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      people[index].lastCheckIn = DateTime.now();
+                    });
+                    savePeople();
+                  },
+                  icon: const Icon(Icons.access_time),
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 
