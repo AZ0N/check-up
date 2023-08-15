@@ -14,7 +14,8 @@ class CheckList extends StatefulWidget {
 }
 
 class _CheckListState extends State<CheckList> {
-  List<Person> people = []; //TODO Sort people based on lastCheckIn
+  //TODO Sort people based on lastCheckIn (or name, maybe toggle)
+  List<Person> people = [];
   late Future peopleFuture = loadPeople();
 
   @override
@@ -52,6 +53,7 @@ class _CheckListState extends State<CheckList> {
               if (!mounted) return;
               if (newPerson == null) return;
 
+              //TODO Maybe show SnackBar to show the person has been added
               setState(() {
                 people.add(newPerson);
               });
