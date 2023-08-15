@@ -2,7 +2,9 @@ import 'package:check_up/person.dart';
 import 'package:flutter/material.dart';
 
 class CreateNewPerson extends StatefulWidget {
-  const CreateNewPerson({super.key});
+  const CreateNewPerson({super.key, required this.peopleNames});
+
+  final List<String> peopleNames;
 
   @override
   State<CreateNewPerson> createState() => _CreateNewPersonState();
@@ -36,6 +38,9 @@ class _CreateNewPersonState extends State<CreateNewPerson> {
                       if (value.length > 24) {
                         return 'Name is too long!';
                       }
+                      if (widget.peopleNames.contains(value.trim())) {
+                        return 'This person already exists!';
+                      }
                       return null;
                     },
                   ),
@@ -46,7 +51,7 @@ class _CreateNewPersonState extends State<CreateNewPerson> {
                         return;
                       }
                       Person newPerson = Person(
-                        name: nameController.text,
+                        name: nameController.text.trim(),
                         lastCheckIn: DateTime.now(),
                       );
                       Navigator.pop(context, newPerson);

@@ -44,7 +44,8 @@ class _CheckListState extends State<CheckList> {
               var newPerson = await Navigator.push(
                 context,
                 MaterialPageRoute<Person>(
-                  builder: (context) => const CreateNewPerson(),
+                  builder: (context) => CreateNewPerson(
+                      peopleNames: people.map((e) => e.name).toList()),
                 ),
               );
 
