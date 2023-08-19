@@ -1,21 +1,23 @@
 class Person {
   String name;
   DateTime lastCheckIn;
-  //TODO bool isFavorite
+  bool isFavorite;
 
-  Person({required this.name, required this.lastCheckIn});
+  Person(
+      {required this.name, required this.lastCheckIn, this.isFavorite = false});
 
   factory Person.fromMap(Map<String, dynamic> json) {
     return Person(
-      name: json['name'],
-      lastCheckIn: DateTime.parse(json['lastCheckIn']),
-    );
+        name: json['name'],
+        lastCheckIn: DateTime.parse(json['lastCheckIn']),
+        isFavorite: json['isFavorite']);
   }
 
   Map<String, dynamic> toMap() {
     return {
       "name": name,
       "lastCheckIn": lastCheckIn.toIso8601String(),
+      "isFavorite": isFavorite
     };
   }
 }

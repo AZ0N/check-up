@@ -71,7 +71,14 @@ class _CheckListState extends State<CheckList> {
                 background: Container(color: Colors.red),
                 direction: DismissDirection.endToStart,
                 child: ListTile(
-                  title: Text(people[index].name),
+                  title: Row(
+                    children: [
+                      Text(people[index].name),
+                      const SizedBox(width: 10),
+                      if (people[index].isFavorite)
+                        const Icon(Icons.favorite, size: 20),
+                    ],
+                  ),
                   subtitle: Text(Util.formatDuration(dif)),
                   trailing: IconButton(
                     onPressed: () {
@@ -122,7 +129,15 @@ class _CheckListState extends State<CheckList> {
   }
 
   sortPeople() {
-    people.sort((a, b) => a.lastCheckIn.compareTo(b.lastCheckIn));
+    people.sort((a, b) {
+      if (a.isFavorite == b.isFavorite) {
+        return a.lastCheckIn.compareTo(b.lastCheckIn);
+      }
+      if (b.isFavorite) {
+        return 1;
+      }
+      return -1;
+    });
   }
 
   //TODO Maybe move these methods to data.dart/localData.dart for clearer separation
