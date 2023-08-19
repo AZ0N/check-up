@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:check_up/create_new_person.dart';
+import 'package:check_up/create_new_person_view.dart';
 import 'package:check_up/person.dart';
 import 'package:check_up/util.dart';
 import 'package:flutter/material.dart';
@@ -103,7 +103,7 @@ class _CheckListState extends State<CheckList> {
     Person? newPerson = await Navigator.push(
       context,
       MaterialPageRoute<Person>(
-        builder: (context) => CreateNewPerson(
+        builder: (context) => CreateNewPersonView(
           peopleNames: people.map((e) => e.name).toList(),
         ),
       ),

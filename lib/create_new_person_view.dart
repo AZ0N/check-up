@@ -1,16 +1,16 @@
 import 'package:check_up/person.dart';
 import 'package:flutter/material.dart';
 
-class CreateNewPerson extends StatefulWidget {
-  const CreateNewPerson({super.key, required this.peopleNames});
+class CreateNewPersonView extends StatefulWidget {
+  const CreateNewPersonView({super.key, required this.peopleNames});
 
   final List<String> peopleNames;
 
   @override
-  State<CreateNewPerson> createState() => _CreateNewPersonState();
+  State<CreateNewPersonView> createState() => _CreateNewPersonViewState();
 }
 
-class _CreateNewPersonState extends State<CreateNewPerson> {
+class _CreateNewPersonViewState extends State<CreateNewPersonView> {
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
 
