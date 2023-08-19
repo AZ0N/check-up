@@ -3,8 +3,11 @@ class Person {
   DateTime lastCheckIn;
   bool isFavorite;
 
-  Person(
-      {required this.name, required this.lastCheckIn, this.isFavorite = false});
+  Person({
+    required this.name,
+    required this.lastCheckIn,
+    this.isFavorite = false,
+  });
 
   factory Person.fromMap(Map<String, dynamic> json) {
     return Person(
