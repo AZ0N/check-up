@@ -41,26 +41,7 @@ class _CheckListState extends State<CheckList> {
             splashRadius: 20,
           ),
           IconButton(
-            //TODO Extract method
-            onPressed: () async {
-              var newPerson = await Navigator.push(
-                context,
-                MaterialPageRoute<Person>(
-                  builder: (context) => CreateNewPerson(
-                      peopleNames: people.map((e) => e.name).toList()),
-                ),
-              );
-
-              if (!mounted) return;
-              if (newPerson == null) return;
-
-              //TODO Maybe show SnackBar to show the person has been added
-              setState(() {
-                people.add(newPerson);
-                sortPeople();
-              });
-              savePeople();
-            },
+            onPressed: createNewPerson,
             icon: const Icon(Icons.add),
             splashRadius: 20,
           ),
@@ -80,16 +61,15 @@ class _CheckListState extends State<CheckList> {
               Person person = people[index];
               Duration dif = DateTime.now().difference(person.lastCheckIn);
               //TODO Maybe extract this into StatelessWidget, passing in the person and a callback
-              return GestureDetector(
-                onLongPress: () {
-                  //TODO Maybe create context menu, with options to delete the person and manually set lastCheckIn
-                  //TODO Create "Are you sure?"-menu
+              return Dismissible(
+                key: Key(people[index].name),
+                onDismissed: (direction) {
                   setState(() {
-                    people.removeAt(index);
-                    sortPeople();
+                    removePersonAt(index);
                   });
-                  savePeople();
                 },
+                background: Container(color: Colors.red),
+                direction: DismissDirection.endToStart,
                 child: ListTile(
                   title: Text(people[index].name),
                   subtitle: Text(Util.formatDuration(dif)),
@@ -110,6 +90,35 @@ class _CheckListState extends State<CheckList> {
         },
       ),
     );
+  }
+
+  createNewPerson() async {
+    Person? newPerson = await Navigator.push(
+      context,
+      MaterialPageRoute<Person>(
+        builder: (context) => CreateNewPerson(
+          peopleNames: people.map((e) => e.name).toList(),
+        ),
+      ),
+    );
+
+    if (!mounted) return;
+    if (newPerson == null) return;
+
+    //TODO Maybe show SnackBar to show the person has been added
+    setState(() {
+      addPerson(newPerson);
+    });
+  }
+
+  removePersonAt(int index) {
+    people.removeAt(index);
+    savePeople();
+  }
+
+  addPerson(Person newPerson) {
+    people.add(newPerson);
+    savePeople();
   }
 
   sortPeople() {
