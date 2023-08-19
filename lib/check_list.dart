@@ -14,7 +14,7 @@ class CheckList extends StatefulWidget {
 }
 
 class _CheckListState extends State<CheckList> {
-  //TODO Sort people based on lastCheckIn (or name, maybe toggle)
+  //TODO Sorting mode
   List<Person> people = [];
   late Future peopleFuture = loadPeople();
 
@@ -34,6 +34,7 @@ class _CheckListState extends State<CheckList> {
                     DateTime.now().add(const Duration(days: -365 - 7 - 2));
                 people[2].lastCheckIn =
                     DateTime.now().add(const Duration(days: -2, hours: -5));
+                sortPeople();
               });
             },
             icon: const Icon(Icons.manage_accounts_outlined),
@@ -56,6 +57,7 @@ class _CheckListState extends State<CheckList> {
               //TODO Maybe show SnackBar to show the person has been added
               setState(() {
                 people.add(newPerson);
+                sortPeople();
               });
               savePeople();
             },
@@ -84,6 +86,7 @@ class _CheckListState extends State<CheckList> {
                   //TODO Create "Are you sure?"-menu
                   setState(() {
                     people.removeAt(index);
+                    sortPeople();
                   });
                   savePeople();
                 },
@@ -94,6 +97,7 @@ class _CheckListState extends State<CheckList> {
                     onPressed: () {
                       setState(() {
                         people[index].lastCheckIn = DateTime.now();
+                        sortPeople();
                       });
                       savePeople();
                     },
@@ -106,6 +110,10 @@ class _CheckListState extends State<CheckList> {
         },
       ),
     );
+  }
+
+  sortPeople() {
+    people.sort((a, b) => a.lastCheckIn.compareTo(b.lastCheckIn));
   }
 
   //TODO Maybe move these methods to data.dart/localData.dart for clearer separation
