@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:check_up/create_new_person_view.dart';
+import 'package:check_up/edit_person_view.dart';
 import 'package:check_up/person.dart';
 import 'package:check_up/util.dart';
 import 'package:flutter/material.dart';
@@ -70,25 +71,28 @@ class _CheckListState extends State<CheckList> {
                 },
                 background: Container(color: Colors.red),
                 direction: DismissDirection.endToStart,
-                child: ListTile(
-                  title: Row(
-                    children: [
-                      Text(people[index].name),
-                      const SizedBox(width: 10),
-                      if (people[index].isFavorite)
-                        const Icon(Icons.favorite, size: 20),
-                    ],
-                  ),
-                  subtitle: Text(Util.formatDuration(dif)),
-                  trailing: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        people[index].lastCheckIn = DateTime.now();
-                        sortPeople();
-                      });
-                      savePeople();
-                    },
-                    icon: const Icon(Icons.access_time),
+                child: InkWell(
+                  onTap: () => editPerson(person),
+                  child: ListTile(
+                    title: Row(
+                      children: [
+                        Text(people[index].name),
+                        const SizedBox(width: 10),
+                        if (people[index].isFavorite)
+                          const Icon(Icons.favorite, size: 20),
+                      ],
+                    ),
+                    subtitle: Text(Util.formatDuration(dif)),
+                    trailing: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          people[index].lastCheckIn = DateTime.now();
+                          sortPeople();
+                        });
+                        savePeople();
+                      },
+                      icon: const Icon(Icons.access_time),
+                    ),
                   ),
                 ),
               );
@@ -116,6 +120,14 @@ class _CheckListState extends State<CheckList> {
     setState(() {
       addPerson(newPerson);
     });
+  }
+
+  editPerson(Person person) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EditPersonView(person: person)),
+    );
+    setState(() {});
   }
 
   removePersonAt(int index) {
