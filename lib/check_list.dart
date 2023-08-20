@@ -159,7 +159,11 @@ class _CheckListState extends State<CheckList> {
       people = [];
       return;
     }
-    //TODO Maybe wrap this in try/catch and display error message if there were errors in decoding the saved data
-    people = jsonData.map((e) => Person.fromMap(jsonDecode(e))).toList();
+    try {
+      people = jsonData.map((e) => Person.fromMap(jsonDecode(e))).toList();
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error loading people!")));
+    }
   }
 }
