@@ -25,7 +25,7 @@ class Person {
     return {
       "name": name,
       "lastCheckIn": lastCheckIn.toIso8601String(),
-      "isFavorite": isFavorite
+      "isFavorite": isFavorite,
     };
   }
 }
