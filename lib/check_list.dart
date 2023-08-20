@@ -116,7 +116,9 @@ class _CheckListState extends State<CheckList> {
     if (!mounted) return;
     if (newPerson == null) return;
 
-    //TODO Maybe show SnackBar to show the person has been added
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('${newPerson.name} added!')),
+    );
     setState(() {
       addPerson(newPerson);
     });
