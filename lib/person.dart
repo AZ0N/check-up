@@ -11,9 +11,10 @@ class Person {
 
   factory Person.fromMap(Map<String, dynamic> json) {
     return Person(
-        name: json['name'],
-        lastCheckIn: DateTime.parse(json['lastCheckIn']),
-        isFavorite: json['isFavorite']);
+      name: json['name'],
+      lastCheckIn: DateTime.parse(json['lastCheckIn']),
+      isFavorite: json['isFavorite'] ?? false,
+    );
   }
 
   Map<String, dynamic> toMap() {
