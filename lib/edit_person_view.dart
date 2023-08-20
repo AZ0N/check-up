@@ -35,9 +35,7 @@ class _EditPersonViewState extends State<EditPersonView> {
                 widget.person.toggleFavorite();
               });
             },
-            icon: Icon(
-              widget.person.isFavorite ? Icons.favorite : Icons.favorite_border,
-            ),
+            icon: Icon(widget.person.isFavorite ? Icons.favorite : Icons.favorite_border),
             splashRadius: 20,
           ),
         ],
