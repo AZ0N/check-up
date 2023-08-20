@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:check_up/create_new_person_view.dart';
@@ -18,6 +19,19 @@ class _CheckListState extends State<CheckList> {
   //TODO Sorting mode
   List<Person> people = [];
   late Future peopleFuture = loadPeople();
+
+  late DateTime now = DateTime.now();
+  late Timer everySecond;
+
+  @override
+  void initState() {
+    everySecond = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        now = DateTime.now();
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +59,7 @@ class _CheckListState extends State<CheckList> {
             itemCount: people.length,
             itemBuilder: (context, index) {
               Person person = people[index];
-              Duration dif = DateTime.now().difference(person.lastCheckIn);
+              Duration dif = now.difference(person.lastCheckIn);
               //TODO Maybe extract this into StatelessWidget, passing in the person and a callback
               return Dismissible(
                 key: Key(people[index].name),
@@ -111,9 +125,10 @@ class _CheckListState extends State<CheckList> {
       context,
       MaterialPageRoute(builder: (context) => EditPersonView(person: person, peopleNames: peopleNames())),
     );
-    sortPeople();
+    setState(() {
+      sortPeople();
+    });
     savePeople();
-    setState(() {});
   }
 
   removePersonAt(int index) {

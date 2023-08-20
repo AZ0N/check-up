@@ -13,27 +13,42 @@ class Util {
     String result = "";
 
     if (count > 0 && years > 0) {
-      result += "$years ${years == 1 ? "year" : "years"}, ";
+      result += "$years ${years == 1 ? "year" : "years"}";
       count--;
     }
     if (count > 0 && weeks > 0) {
-      result += "$weeks ${weeks == 1 ? "week" : "weeks"}, ";
+      if (count != 3) {
+        result += ", ";
+      }
+      result += "$weeks ${weeks == 1 ? "week" : "weeks"}";
       count--;
     }
     if (count > 0 && days > 0) {
-      result += "$days ${days == 1 ? "day" : "days"}, ";
+      if (count != 3) {
+        result += ", ";
+      }
+      result += "$days ${days == 1 ? "day" : "days"}";
       count--;
     }
     if (count > 0 && hours > 0) {
-      result += "$hours ${hours == 1 ? "hour" : "hours"}, ";
+      if (count != 3) {
+        result += ", ";
+      }
+      result += "$hours ${hours == 1 ? "hour" : "hours"}";
       count--;
     }
     if (count > 0 && minutes > 0) {
-      result += "$minutes ${minutes == 1 ? "minute" : "minutes"}, ";
+      if (count != 3) {
+        result += ", ";
+      }
+      result += "$minutes ${minutes == 1 ? "minute" : "minutes"}";
       count--;
     }
     if (count > 0) {
-      result += "$seconds ${seconds == 1 ? "second" : "seconds"}, ";
+      if (count != 3) {
+        result += ", ";
+      }
+      result += "$seconds ${seconds == 1 ? "second" : "seconds"}";
     }
     return result;
   }
