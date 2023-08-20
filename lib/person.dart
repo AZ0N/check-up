@@ -9,6 +9,10 @@ class Person {
     this.isFavorite = false,
   });
 
+  void toggleFavorite() {
+    isFavorite = !isFavorite;
+  }
+
   factory Person.fromMap(Map<String, dynamic> json) {
     return Person(
       name: json['name'],

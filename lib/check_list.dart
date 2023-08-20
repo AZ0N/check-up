@@ -29,12 +29,9 @@ class _CheckListState extends State<CheckList> {
           IconButton(
             onPressed: () {
               setState(() {
-                people[0].lastCheckIn =
-                    DateTime.now().add(const Duration(days: -10));
-                people[1].lastCheckIn =
-                    DateTime.now().add(const Duration(days: -365 - 7 - 2));
-                people[2].lastCheckIn =
-                    DateTime.now().add(const Duration(days: -2, hours: -5));
+                people[0].lastCheckIn = DateTime.now().add(const Duration(days: -10));
+                people[1].lastCheckIn = DateTime.now().add(const Duration(days: -365 - 7 - 2));
+                people[2].lastCheckIn = DateTime.now().add(const Duration(days: -2, hours: -5));
                 sortPeople();
               });
             },
@@ -78,8 +75,7 @@ class _CheckListState extends State<CheckList> {
                       children: [
                         Text(people[index].name),
                         const SizedBox(width: 10),
-                        if (people[index].isFavorite)
-                          const Icon(Icons.favorite, size: 20),
+                        if (people[index].isFavorite) const Icon(Icons.favorite, size: 20),
                       ],
                     ),
                     subtitle: Text(Util.formatDuration(dif)),
@@ -107,9 +103,7 @@ class _CheckListState extends State<CheckList> {
     Person? newPerson = await Navigator.push(
       context,
       MaterialPageRoute<Person>(
-        builder: (context) => CreateNewPersonView(
-          peopleNames: people.map((e) => e.name).toList(),
-        ),
+        builder: (context) => CreateNewPersonView(peopleNames: peopleNames()),
       ),
     );
 
@@ -127,8 +121,10 @@ class _CheckListState extends State<CheckList> {
   editPerson(Person person) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => EditPersonView(person: person)),
+      MaterialPageRoute(builder: (context) => EditPersonView(person: person, peopleNames: peopleNames())),
     );
+    sortPeople();
+    savePeople();
     setState(() {});
   }
 
@@ -152,6 +148,10 @@ class _CheckListState extends State<CheckList> {
       }
       return -1;
     });
+  }
+
+  List<String> peopleNames() {
+    return people.map((e) => e.name).toList();
   }
 
   //TODO Maybe move these methods to data.dart/localData.dart for clearer separation
